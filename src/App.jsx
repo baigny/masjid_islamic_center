@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   ArrowRight, ArrowUp, ArrowUpRight, BookOpen, Building2, CalendarDays,
   GraduationCap, HandCoins, HeartHandshake, Landmark, LibraryBig, MapPin, Menu,
@@ -155,16 +155,44 @@ function ServicesPage() {
 }
 
 function GalleryPage() {
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const dialogRef = useRef(null);
+
+  useEffect(() => {
+    if (!selectedPhoto) return;
+    const dialog = dialogRef.current;
+    const trigger = document.activeElement;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    dialog.showModal();
+    return () => {
+      dialog.close();
+      document.body.style.overflow = previousOverflow;
+      if (trigger instanceof HTMLElement && trigger.isConnected) trigger.focus();
+    };
+  }, [selectedPhoto]);
+
   return <section className="bg-[#f7f4ed] px-5 py-14 md:px-10 md:py-20">
     <div className="mx-auto max-w-7xl">
       <div className="mb-8 md:mb-12"><p className="mb-3 text-xs font-bold tracking-[.22em] text-cyan-800">ISLAMIC CENTRE · TOLICHOWKI</p><h1 className="font-display text-5xl leading-none text-[#193a45] md:text-7xl">Spaces to gather <em className="text-cyan-800">and grow.</em></h1></div>
       <div className="columns-2 gap-3 md:columns-3 md:gap-4 lg:columns-4">
         {galleryPhotos.map((photo) => <figure key={photo.src} className="mb-3 break-inside-avoid overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm md:mb-4">
-          <img className="block h-auto w-full object-cover" src={photo.src} alt={photo.alt} loading="lazy" />
+          <button type="button" onClick={() => setSelectedPhoto(photo)} aria-label={`Enlarge ${photo.title.replaceAll('_', ' ')}`} aria-haspopup="dialog" className="group block w-full cursor-zoom-in overflow-hidden focus-visible:outline-4 focus-visible:-outline-offset-4 focus-visible:outline-cyan-700">
+            <img className="block h-auto w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]" src={photo.src} alt={photo.alt} loading="lazy" />
+          </button>
           <figcaption className="px-3 py-2 text-xs text-slate-600">{photo.title.replaceAll('_', ' ')}</figcaption>
         </figure>)}
       </div>
     </div>
+    <dialog ref={dialogRef} aria-label="Enlarged gallery photo" onClose={() => setSelectedPhoto(null)} onClick={event => { if (event.target === event.currentTarget) dialogRef.current.close(); }} className="fixed inset-0 m-0 h-dvh max-h-none w-screen max-w-none items-center justify-center border-0 bg-slate-950/95 p-4 text-white backdrop:bg-slate-950/80 open:flex md:p-10">
+      <form method="dialog" className="absolute right-4 top-4 z-10 md:right-6 md:top-6">
+        <button type="submit" aria-label="Close enlarged photo" className="grid size-12 place-items-center rounded-full border border-white/30 bg-slate-900/80 text-white transition hover:bg-slate-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"><X size={24} /></button>
+      </form>
+      {selectedPhoto && <figure className="max-w-6xl">
+        <img src={selectedPhoto.src} alt={selectedPhoto.alt} className="mx-auto max-h-[calc(100dvh-10rem)] max-w-full rounded-lg object-contain" />
+        <figcaption className="mt-4 text-center text-sm text-white/90 md:text-base">{selectedPhoto.title.replaceAll('_', ' ')}</figcaption>
+      </figure>}
+    </dialog>
   </section>;
 }
 
