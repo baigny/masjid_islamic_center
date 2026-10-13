@@ -4,7 +4,11 @@ import {
   GraduationCap, HandCoins, HeartHandshake, Landmark, LibraryBig, MapPin, Menu,
   MoonStar, PenTool, Scissors, UsersRound, Wrench, X,
 } from 'lucide-react';
-import galleryPhotos from './gallery.json';
+import galleryData from './gallery.json';
+
+const baseUrl = import.meta.env.BASE_URL;
+const galleryPhotos = galleryData.map(photo => ({ ...photo, src: `${baseUrl}${photo.src.slice(1)}` }));
+const logoUrl = `${baseUrl}images/Islamic_center_logo.png`;
 
 const services = [
   { title: 'Library', text: 'A quiet reading space with Qur’anic tafaseer, Hadith, Islamic history, literature, and books for reflection. Open Monday to Saturday, 3:00-8:15 PM.', icon: LibraryBig },
@@ -30,7 +34,7 @@ function routeName(path) {
 }
 
 function PageLink({ to, onNavigate, children, className = '', ...props }) {
-  return <a href={to} className={className} onClick={event => {
+  return <a href={`${baseUrl}#${to}`} className={className} onClick={event => {
     if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
     onNavigate(to);
@@ -44,7 +48,7 @@ function Header({ onNavigate, currentRoute, isScrolled }) {
     <header className={`fixed inset-x-0 top-0 z-40 border-b backdrop-blur-md transition-colors duration-300 ${transparent ? 'border-transparent bg-emerald-950/20 text-white shadow-none [&_strong]:!text-white [&_small]:!text-white/75' : 'border-slate-200 bg-white/95 text-slate-800 shadow-sm'}`}>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 md:px-10">
         <PageLink to="/" onNavigate={onNavigate} className="flex items-center gap-3" aria-label="Islamic Centre home">
-          <span className="grid size-12 shrink-0 place-items-center rounded-full border border-slate-200 bg-white p-1 shadow-sm"><img src="/images/Islamic_center_logo.png" alt="Islamic Centre logo" className="size-full object-contain" /></span>
+          <span className="grid size-12 shrink-0 place-items-center rounded-full border border-slate-200 bg-white p-1 shadow-sm"><img src={logoUrl} alt="Islamic Centre logo" className="size-full object-contain" /></span>
           <span><strong className="block font-display text-2xl leading-none text-[#193a45] md:text-3xl">Islamic Centre</strong><small className="mt-1 block text-[9px] tracking-[.22em] text-slate-500">TOLICHOWKI · HYDERABAD</small></span>
         </PageLink>
         <nav className={`hidden items-center gap-7 text-sm md:flex ${transparent ? 'text-white/90' : 'text-slate-600'}`} aria-label="Main navigation">
@@ -207,24 +211,24 @@ function ContactPage() {
 
 function Footer({ onNavigate }) {
   return <footer className="bg-[#f7f4ed] px-5 pb-8 pt-4 text-sm text-slate-500 md:px-10"><div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 border-t border-slate-200 pt-6">
-    <PageLink to="/" onNavigate={onNavigate} className="flex items-center gap-3" aria-label="Islamic Centre home"><span className="grid size-12 shrink-0 place-items-center rounded-full border border-slate-200 bg-white p-1 shadow-sm"><img src="/images/Islamic_center_logo.png" alt="Islamic Centre logo" className="size-full object-contain" /></span><span><strong className="block font-display text-xl leading-none text-[#193a45]">Islamic Centre</strong><small className="mt-1 block text-[9px] tracking-[.22em] text-slate-500">TOLICHOWKI · HYDERABAD</small></span></PageLink>
+    <PageLink to="/" onNavigate={onNavigate} className="flex items-center gap-3" aria-label="Islamic Centre home"><span className="grid size-12 shrink-0 place-items-center rounded-full border border-slate-200 bg-white p-1 shadow-sm"><img src={logoUrl} alt="Islamic Centre logo" className="size-full object-contain" /></span><span><strong className="block font-display text-xl leading-none text-[#193a45]">Islamic Centre</strong><small className="mt-1 block text-[9px] tracking-[.22em] text-slate-500">TOLICHOWKI · HYDERABAD</small></span></PageLink>
   </div></footer>;
 }
 
 export default function App() {
-  const [currentRoute, setCurrentRoute] = useState(() => routeName(window.location.pathname));
+  const [currentRoute, setCurrentRoute] = useState(() => routeName(window.location.hash.slice(1)));
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [isScrolled, setIsScrolled] = useState(window.scrollY > 40);
   const navigate = path => {
     const nextRoute = routeName(path);
-    window.history.pushState({}, '', nextRoute);
+    window.history.pushState({}, '', `${baseUrl}#${nextRoute}`);
     setCurrentRoute(nextRoute);
     setShowBackToTop(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   useEffect(() => {
-    const onPopState = () => { setCurrentRoute(routeName(window.location.pathname)); window.scrollTo(0, 0); };
+    const onPopState = () => { setCurrentRoute(routeName(window.location.hash.slice(1))); window.scrollTo(0, 0); };
     const onScroll = () => { setShowBackToTop(window.scrollY > 420); setIsScrolled(window.scrollY > 40); };
     window.addEventListener('popstate', onPopState);
     window.addEventListener('scroll', onScroll, { passive: true });
