@@ -95,24 +95,24 @@ function Hero() {
 
 function HomeBento({ onNavigate }) {
   const images = [
-    [galleryPhotos[25], 'Main prayer hall', 'col-span-1 row-span-2 md:col-span-3 md:col-start-1 md:row-span-2 md:row-start-1'],
-    [galleryPhotos[23], 'Library reading space', 'col-span-1 md:col-span-6 md:col-start-4 md:row-start-1'],
-    [galleryPhotos[18], 'Islamic Book Centre', 'col-span-1 row-span-2 md:col-span-3 md:col-start-10 md:row-span-2 md:row-start-1'],
-    [galleryPhotos[6], 'Skills training space', 'col-span-1 md:col-span-3 md:col-start-4 md:row-start-2'],
-    [galleryPhotos[31], 'Learning space', 'col-span-2 row-span-2 md:col-span-3 md:col-start-7 md:row-span-1 md:row-start-2'],
-    [galleryPhotos[22], 'Community library', 'col-span-1 md:col-span-4 md:col-start-1 md:row-start-3'],
-    [galleryPhotos[20], 'Community service office', 'col-span-1 md:col-span-5 md:col-start-5 md:row-start-3'],
-    [galleryPhotos[1], 'Prayer hall', 'col-span-2 md:col-span-3 md:col-start-10 md:row-start-3'],
+    [galleryPhotos[25], 'Main prayer hall', 'col-span-2 row-span-2'],
+    [galleryPhotos[23], 'Library reading space', 'md:col-span-2'],
+    [galleryPhotos[18], 'Islamic Book Centre', 'md:col-span-2'],
+    [galleryPhotos[6], 'Skills training space', 'md:col-span-2'],
+    [galleryPhotos[31], 'Learning space', 'md:col-span-2'],
+    [galleryPhotos[22], 'Community library', 'md:col-span-2'],
+    [galleryPhotos[20], 'Community service office', 'md:col-span-2'],
+    [galleryPhotos[1], 'Prayer hall', 'col-span-2'],
   ];
 
-  return <section className="bg-[#e8b2aa] px-2 py-3 sm:px-3 md:py-5">
-    <div className="mx-auto mb-2 flex max-w-5xl items-end justify-between gap-3 px-1 sm:mb-3">
-      <div><p className="mb-1 text-[10px] font-bold tracking-[.2em] text-[#5b4554]">A GLIMPSE INSIDE</p><h2 className="font-display text-3xl leading-tight text-[#2c202e] sm:text-4xl">Life at the centre</h2></div>
-      <PageLink to="/gallery" onNavigate={onNavigate} className="mb-1 inline-flex shrink-0 items-center gap-2 rounded-full bg-[#2c202e] px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-[#443346] sm:px-5 sm:text-sm">Show more <ArrowRight size={15} /></PageLink>
+  return <section className="bg-white px-5 py-14 md:px-10 md:py-20">
+    <div className="mx-auto mb-7 flex max-w-7xl flex-wrap items-end justify-between gap-5 md:mb-9">
+      <div><p className="mb-3 text-xs font-bold tracking-[.22em] text-cyan-800">A GLIMPSE INSIDE</p><h2 className="font-display text-4xl leading-tight text-[#193a45] md:text-5xl">Life at the centre</h2></div>
+      <PageLink to="/gallery" onNavigate={onNavigate} className="inline-flex shrink-0 items-center gap-2 rounded-full bg-cyan-800 px-5 py-3 text-sm font-semibold text-white transition hover:bg-cyan-900">Show more <ArrowRight size={15} /></PageLink>
     </div>
-    <div className="mx-auto max-w-5xl rounded-2xl bg-[#2c202e] p-1 shadow-[0_16px_45px_-24px_rgba(44,32,46,.6)] sm:rounded-3xl sm:p-1.5 md:p-2">
-      <div className="grid grid-flow-dense auto-rows-[88px] grid-cols-2 gap-1 sm:auto-rows-[110px] md:auto-rows-[100px] md:grid-cols-12 md:gap-1">
-        {images.map(([photo, alt, layout]) => <div key={photo.src} className={`group relative overflow-hidden rounded-lg bg-white/10 sm:rounded-xl ${layout}`}>
+    <div className="mx-auto max-w-7xl">
+      <div className="grid auto-rows-[140px] grid-cols-2 gap-3 sm:auto-rows-[170px] md:auto-rows-[180px] md:grid-cols-6 md:gap-4 lg:auto-rows-[200px]">
+        {images.map(([photo, alt, layout]) => <div key={photo.src} className={`group relative overflow-hidden rounded-2xl bg-slate-100 ${layout}`}>
           <img src={photo.src} alt={alt} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.045]" />
         </div>)}
       </div>
