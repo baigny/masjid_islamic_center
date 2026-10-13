@@ -201,10 +201,13 @@ function GalleryPage() {
 }
 
 function ContactPage() {
+  const address = '8-1-22/1/M, 7 Tombs Rd, Golden Sands Colony, Aditya Nagar Colony, Surya Nagar, Toli Chowki, Hyderabad, Telangana 500008';
+  const mapQuery = encodeURIComponent(address);
+
   return <section className="bg-[#f7fafb] px-5 py-16 md:px-10 md:py-24">
     <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[1fr_1fr] md:gap-20">
-      <div><p className="mb-3 text-xs font-bold tracking-[.22em] text-cyan-800">COME VISIT</p><h1 className="font-display text-6xl leading-tight text-[#193a45] md:text-7xl">You are<br /><em className="text-cyan-800">welcome here.</em></h1><p className="mt-6 max-w-xl text-base leading-8 text-slate-600">Visit us for prayer, learning, or to connect with the community. We look forward to welcoming you.</p><a className="mt-8 inline-flex items-center gap-3 rounded-full bg-cyan-800 px-6 py-4 text-sm font-semibold text-white transition hover:bg-cyan-900" href="https://www.google.com/maps/search/?api=1&query=Islamic+Centre%2C+7+Tombs+Road%2C+Tolichowki%2C+Hyderabad" target="_blank" rel="noreferrer"><MapPin size={18} /> Get directions <ArrowUpRight size={16} /></a></div>
-      <article className="h-fit rounded-3xl border border-slate-200 bg-white p-7 shadow-sm md:p-9"><span className="grid size-12 place-items-center rounded-2xl bg-cyan-50 text-cyan-800"><MapPin size={23} /></span><h2 className="mt-5 font-display text-3xl text-[#193a45]">Find the centre</h2><address className="mt-3 not-italic leading-7 text-slate-600">Islamic Centre<br />7 Tombs Road, Tolichowki<br />Hyderabad, Telangana</address></article>
+      <div><p className="mb-3 text-xs font-bold tracking-[.22em] text-cyan-800">COME VISIT</p><h1 className="font-display text-6xl leading-tight text-[#193a45] md:text-7xl">You are<br /><em className="text-cyan-800">welcome here.</em></h1><p className="mt-6 max-w-xl text-base leading-8 text-slate-600">Visit us for prayer, learning, or to connect with the community. We look forward to welcoming you.</p><a className="mt-8 inline-flex items-center gap-3 rounded-full bg-cyan-800 px-6 py-4 text-sm font-semibold text-white transition hover:bg-cyan-900" href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`} target="_blank" rel="noreferrer"><MapPin size={18} /> Get directions <ArrowUpRight size={16} /></a></div>
+      <article className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm"><div className="p-7 md:p-9"><span className="grid size-12 place-items-center rounded-2xl bg-cyan-50 text-cyan-800"><MapPin size={23} /></span><h2 className="mt-5 font-display text-3xl text-[#193a45]">Find the centre</h2><address className="mt-3 not-italic leading-7 text-slate-600">Islamic Centre<br />{address}</address></div><iframe title="Map showing Islamic Centre in Toli Chowki" src={`https://www.google.com/maps?q=${mapQuery}&output=embed`} className="h-80 w-full border-0 md:h-96" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen /></article>
     </div>
   </section>;
 }
