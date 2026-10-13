@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Manrope Variable", Arial, sans-serif;
+  --font-display: "Cormorant Garamond Variable", Georgia, serif;
+}
+
+@utility scrollbar-hidden {
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
